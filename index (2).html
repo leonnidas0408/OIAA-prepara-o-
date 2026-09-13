@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilha de Preparação — OIAA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple-900:#38006C;
+  --purple-800:#491EA7;
+  --purple-700:#491EA7;
+  --purple-100:#EFE9FA;
+  --yellow:#FFF402;
+  --yellow-text:#8A7600;
+  --yellow-bg:#FFF6B8;
+  --blue:#183EFF;
+  --blue-100:#EEF0FF;
+  --green:#009624;
+  --green-100:#E8F7EC;
+  --pink:#FF0478;
+  --pink-100:#FFE3F0;
+  --red:#DA0015;
+  --red-100:#FFF0F2;
+  --ink:#1C1230;
+  --ink-soft:#5B5470;
+  --bg:#FFFFFF;
+  --bg-soft:#F8F7FC;
+  --band-bg:#F1EFF8;
+  --section-bg:#F5F3FA;
+  --line:#D6D2E4;
+  --radius:6px;
+  --mono:'Space Grotesk',ui-monospace,monospace;
+  --sans:'Sora',system-ui,-apple-system,sans-serif;
+  --capy-body:#D89355;
+  --capy-body-dark:#B9723A;
+  --capy-snout:#F1C48B;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--bg-soft);
+}
+a{color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+h1,h2,h3,h4{font-family:var(--mono);letter-spacing:.01em;margin:0 0 .5em 0;}
+p{line-height:1.55;}
+.small{font-size:.85rem;color:var(--ink-soft);}
+
+/* ---------- SHELL ---------- */
+#shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh;}
+@media (max-width:860px){#shell{grid-template-columns:1fr;}#sidebar{position:static;height:auto;}}
+
+#sidebar{
+  background:var(--purple-900);
+  color:#fff;
+  padding:0 16px 24px;
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+
+/* ribbon-style logo lockup, echoing the OIAA banner mark (not a reproduction of the official artwork) */
+.brand{margin:0 -16px 20px;padding:16px 16px 14px;position:relative;background:var(--purple-800);}
+.brand::after{
+  content:'';position:absolute;left:0;right:0;bottom:-9px;height:9px;
+  background:repeating-linear-gradient(-45deg,var(--purple-800) 0 9px, transparent 0 18px);
+}
+.brand-top{display:flex;align-items:center;gap:10px;}
+.brand-badge{
+  width:38px;height:38px;border-radius:9px;background:var(--yellow);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.brand-badge svg{width:24px;height:24px;}
+.brand-text{font-family:var(--mono);font-weight:700;font-size:.78rem;line-height:1.25;letter-spacing:.01em;text-transform:uppercase;}
+.brand-text b{display:block;color:var(--yellow);font-size:.95rem;letter-spacing:.02em;}
+.brand-flag{
+  margin-top:12px;display:inline-block;font-family:var(--mono);font-size:.62rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--purple-900);background:var(--yellow);
+  padding:3px 8px;border-radius:20px;
+}
+.sidebar-scroll{flex:1;overflow-y:auto;padding:0 16px;}
+.sidebar-foot{padding:14px 16px 4px;font-size:.68rem;color:#B7A8E3;line-height:1.4;border-top:1px solid rgba(255,255,255,.12);margin-top:10px;}
+
+nav.groups{display:flex;flex-direction:column;gap:18px;}
+.group-label{font-size:.7rem;color:#C9B9EE;font-weight:600;letter-spacing:.06em;margin:0 0 6px 4px;text-transform:uppercase;}
+.navlink{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;
+  color:#E9E1FA;text-decoration:none;font-size:.87rem;margin-bottom:2px;
+}
+.navlink:hover{background:rgba(255,255,255,.08);}
+.navlink.active{background:#fff;color:var(--purple-900);font-weight:600;}
+.navlink .num{
+  font-family:var(--mono);font-weight:700;font-size:.72rem;width:20px;height:20px;border-radius:5px;
+  display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12);color:#fff;flex-shrink:0;
+}
+.navlink.active .num{background:var(--purple-900);color:#fff;}
+.navlink.locked{opacity:.4;pointer-events:none;}
+.navlink.done .num{background:var(--green);}
+.navlink.done.active .num{background:var(--green);}
+
+/* ---------- MAIN (folha de página, como no wireframe) ---------- */
+main{
+  margin:22px 22px 22px 0;padding:0 40px 0;max-width:920px;background:var(--bg);
+  border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  box-shadow:0 1px 0 rgba(28,18,48,.02);
+}
+@media (max-width:860px){main{margin:0;}}
+@media (max-width:640px){main{padding:0 18px 0;border-radius:0;border-width:0 0 1px;}}
+.pagecontent{padding-top:26px;padding-bottom:34px;}
+@media (max-width:640px){.pagecontent{padding-top:18px;padding-bottom:24px;}}
+
+/* running head band, echoing "GUIA DOS DESAFIOS · FASE 1 ... OIAA 2026" */
+.runninghead{
+  margin:0 -40px;padding:13px 40px;background:var(--band-bg);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;
+  font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--purple-700);
+  border-bottom:1px solid var(--line);
+}
+.runninghead span.rh-right{font-weight:400;color:var(--ink-soft);letter-spacing:.02em;}
+@media (max-width:640px){.runninghead{margin:0 -18px;padding:11px 18px;}}
+
+.eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--purple-700);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.pagehead{margin-bottom:26px;}
+.pagehead h1{font-size:1.8rem;color:var(--purple-900);position:relative;padding-bottom:14px;}
+.pagehead h1::after{content:'';display:block;width:64px;height:4px;background:var(--yellow);border-radius:2px;margin-top:12px;position:absolute;bottom:0;left:0;}
+.pagehead .desc{color:var(--ink-soft);max-width:640px;margin-top:2px;}
+
+/* chapter block — two-tone purple header with big number, like the guide's capítulo pages */
+.chapterblock{
+  display:grid;grid-template-columns:110px 1fr;
+  border-radius:4px;overflow:hidden;margin-bottom:26px;
+}
+.chapterblock .num{
+  background:var(--purple-900);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:2.3rem;color:var(--yellow);
+}
+.chapterblock .txt{padding:20px 24px;background:var(--purple-800);}
+.chapterblock .txt .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--yellow);font-weight:700;text-transform:uppercase;}
+.chapterblock .txt h2{margin:4px 0 0;font-size:1.3rem;color:#fff;font-weight:700;}
+
+/* colored scenario/info boxes, echoing the guide's "O CENÁRIO" / "O QUE VOCÊS VÃO FAZER" cards:
+   thick colored border + light tinted background, mono label on top */
+.infobox{border:3px solid var(--line);border-radius:4px;padding:16px 18px;background:#fff;margin:16px 0;}
+.infobox .ib-label{font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:block;}
+.infobox ul{margin:0;padding-left:18px;}
+.infobox li{margin-bottom:4px;font-size:.92rem;}
+.infobox.ib-blue{border-color:var(--blue);background:var(--blue-100);} .infobox.ib-blue .ib-label{color:var(--blue);}
+.infobox.ib-green{border-color:var(--green);background:var(--green-100);} .infobox.ib-green .ib-label{color:var(--green);}
+.infobox.ib-pink{border-color:var(--pink);background:var(--pink-100);} .infobox.ib-pink .ib-label{color:var(--pink);}
+.infobox.ib-purple{border-color:var(--purple-700);background:var(--purple-100);} .infobox.ib-purple .ib-label{color:var(--purple-700);}
+.infobox-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+
+/* mascot tip bubble, echoing the guide's capybara + speech-bubble device */
+.mascot-tip{display:flex;align-items:flex-start;gap:14px;margin:18px 0;}
+.mascot-tip svg{width:58px;height:58px;flex-shrink:0;}
+.mascot-tip .bubble{
+  position:relative;background:var(--yellow);border:1.5px solid #C9A600;border-radius:10px;
+  padding:11px 15px;font-size:.9rem;font-weight:500;color:#3A2E00;
+}
+.mascot-tip .bubble::before{
+  content:'';position:absolute;left:-9px;top:16px;width:0;height:0;
+  border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:9px solid var(--yellow);
+}
+
+/* marker boxes, echoing SABER/FAZER/CUMPRIR/APOIO of the official guide */
+.markers{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:18px 0 26px;}
+.marker{border:3px solid var(--line);border-radius:4px;padding:13px 15px;background:#fff;}
+.marker .mk-label{font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.marker.saber{border-color:var(--purple-700);background:var(--purple-100);}
+.marker.saber .mk-label{color:var(--purple-700);}
+.marker.fazer{border-color:var(--blue);background:var(--blue-100);}
+.marker.fazer .mk-label{color:var(--blue);}
+.marker.cumprir{border-color:var(--red);background:var(--red-100);}
+.marker.cumprir .mk-label{color:var(--red);}
+.marker.apoio{border-color:var(--green);background:var(--green-100);}
+.marker.apoio .mk-label{color:var(--green);}
+.marker ul{margin:0;padding-left:18px;}
+.marker li{margin-bottom:4px;font-size:.92rem;}
+
+/* section/content block — light fill + thick left bar, echoing "bloco de conteúdo com hierarquia clara" */
+.card{background:var(--section-bg);border:2px solid var(--purple-700);border-left:10px solid var(--purple-700);border-radius:4px;padding:16px 20px;margin-bottom:16px;}
+.card h3{font-size:1.02rem;color:var(--purple-900);}
+
+/* dashboard */
+.progresswrap{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:26px;}
+.progressbar{height:10px;border-radius:6px;background:var(--purple-100);overflow:hidden;margin-top:10px;}
+.progressbar > div{height:100%;background:linear-gradient(90deg,var(--purple-700),var(--pink));}
+.modgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.modcard{
+  background:#fff;border:1.5px solid var(--line);border-top:4px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;
+  text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;position:relative;transition:border-color .12s,transform .12s;
+}
+.modcard:hover{border-color:var(--purple-700);border-top-color:var(--purple-700);transform:translateY(-2px);}
+.modcard.tag-blue{border-top-color:var(--blue);} .modcard.tag-blue:hover{border-top-color:var(--blue);}
+.modcard.tag-green{border-top-color:var(--green);} .modcard.tag-green:hover{border-top-color:var(--green);}
+.modcard.tag-pink{border-top-color:var(--pink);} .modcard.tag-pink:hover{border-top-color:var(--pink);}
+.modcard.tag-purple{border-top-color:var(--purple-700);}
+.modcard.locked{opacity:.45;pointer-events:none;}
+.modcard .top{display:flex;align-items:center;gap:10px;}
+.modcard .numchip{font-family:var(--mono);font-weight:700;font-size:.82rem;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.modcard .title{font-weight:600;font-size:.94rem;line-height:1.25;}
+.modcard .status{font-size:.72rem;font-family:var(--mono);letter-spacing:.03em;padding:2px 8px;border-radius:20px;align-self:flex-start;}
+.status.ns{background:var(--purple-100);color:var(--purple-700);}
+.status.ip{background:#FFF3CD;color:#8a6d00;}
+.status.done{background:var(--green-100);color:var(--green);}
+
+.tag-blue .numchip{background:var(--blue);} .tag-green .numchip{background:var(--green);} .tag-pink .numchip{background:var(--pink);} .tag-purple .numchip{background:var(--purple-700);}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;border:none;border-radius:8px;padding:10px 18px;
+  font-weight:600;font-size:.9rem;background:var(--purple-800);color:#fff;
+}
+.btn:hover{background:var(--purple-900);}
+.btn.secondary{background:#fff;color:var(--purple-800);border:1.5px solid var(--purple-800);}
+.btn.secondary:hover{background:var(--purple-100);}
+.btn.ghost{background:transparent;color:var(--purple-700);padding:8px 4px;}
+.btn:disabled{opacity:.4;pointer-events:none;}
+
+textarea, input[type=text], input[type=number], select{
+  width:100%;font-family:inherit;font-size:.92rem;padding:9px 11px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);
+}
+textarea{min-height:90px;resize:vertical;}
+label{font-size:.82rem;font-weight:600;color:var(--ink-soft);display:block;margin:12px 0 5px;}
+label:first-child{margin-top:0;}
+
+/* loop card */
+.loop{border:3px solid var(--purple-700);border-radius:4px;padding:18px 20px;background:var(--purple-100);margin:20px 0;}
+.loop .stage{font-family:var(--mono);font-size:.68rem;font-weight:700;letter-spacing:.06em;color:var(--purple-700);text-transform:uppercase;margin-bottom:6px;}
+.loop h4{font-size:1rem;color:var(--purple-900);margin-bottom:10px;}
+.hintbox{background:#fff;border:1px dashed var(--purple-700);border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.9rem;display:none;}
+.hintbox.show{display:block;}
+.conceptbox{background:#fff;border-left:4px solid var(--green);border-radius:6px;padding:12px 14px;margin-top:12px;font-size:.92rem;display:none;}
+.conceptbox.show{display:block;}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.savednote{font-size:.82rem;color:var(--green);margin-top:8px;display:none;}
+.savednote.show{display:block;}
+
+/* confusion matrix simulator */
+.cmwrap{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start;}
+table.cm{border-collapse:collapse;}
+table.cm th,table.cm td{border:1px solid var(--line);padding:6px;text-align:center;font-size:.85rem;}
+table.cm th{background:var(--purple-100);font-family:var(--mono);font-size:.7rem;}
+table.cm input{width:56px;text-align:center;padding:5px;border:1px solid var(--line);border-radius:5px;}
+table.metrics th,table.metrics td{border:1px solid var(--line);padding:7px 10px;font-size:.85rem;text-align:center;}
+table.metrics th{background:var(--green-100);font-family:var(--mono);font-size:.7rem;}
+.macro{font-weight:700;color:var(--purple-800);}
+
+/* tvt simulator */
+.dots{display:flex;flex-wrap:wrap;gap:5px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:8px;min-height:110px;}
+.dot{width:12px;height:12px;border-radius:50%;}
+.dot.train{background:var(--purple-700);}
+.dot.val{background:var(--blue);}
+.dot.test{background:var(--pink);}
+.legend{display:flex;gap:16px;margin-top:10px;font-size:.8rem;flex-wrap:wrap;}
+.legend span{display:flex;align-items:center;gap:6px;}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+.checklist{list-style:none;padding:0;margin:0;}
+.checklist li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);}
+.checklist input{margin-top:3px;}
+.checklist .txt{flex:1;font-size:.92rem;}
+.checklist a.rev{font-size:.78rem;color:var(--pink);white-space:nowrap;}
+
+.diario-entry{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#fff;font-size:.87rem;}
+.diario-entry b{color:var(--purple-800);}
+
+footer.pagefoot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.8rem;}
+
+/* bottom banner bar, echoing the guide's purple footer strip on every page */
+.pagebar{
+  margin:30px -40px 0; padding:12px 40px; background:var(--purple-900); color:#C9B9EE;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;
+}
+.pagebar b{color:#fff;}
+.pagebar .flag{background:var(--yellow);color:var(--purple-900);border-radius:20px;padding:2px 10px;font-weight:700;}
+@media (max-width:640px){.pagebar{margin:24px -18px 0;padding:12px 18px;}}
+
+.callout{border:3px solid var(--yellow);background:var(--yellow-bg);padding:13px 17px;border-radius:4px;margin:16px 0;font-size:.9rem;color:#4A3D00;}
+.callout.danger{border-color:var(--red);background:var(--red-100);color:#5A0009;}
+.callout.ok{border-color:var(--green);background:var(--green-100);color:#04421A;}
+
+.gengrid{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0;}
+.geng{width:34px;height:34px;border-radius:6px;}
+</style>
+</head>
+<body>
+<div id="shell">
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="brand-top">
+        <div class="brand-badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 15c0-4 3-8 8-8s8 4 8 8v2c0 1-1 2-2 2H6c-1 0-2-1-2-2v-2z" fill="#38006C"/><circle cx="9" cy="13" r="1.4" fill="#38006C"/><circle cx="15" cy="13" r="1.4" fill="#38006C"/><path d="M12 7V4M9 5l1-2M15 5l-1-2" stroke="#38006C" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="brand-text">Olimpíada de<br><b>Inteligência Artificial<br>Aplicada</b></div>
+      </div>
+      <span class="brand-flag">Trilha de estudo · não oficial</span>
+    </div>
+    <div class="sidebar-scroll">
+      <nav class="groups">
+        <div>
+          <div class="group-label">Painel</div>
+          <a class="navlink" data-route="painel" href="#/painel">Visão geral</a>
+          <a class="navlink" data-route="diagnostico" href="#/diagnostico">Diagnóstico inicial</a>
+        </div>
+        <div>
+          <div class="group-label">Módulos</div>
+          <div id="module-nav"></div>
+        </div>
+        <div>
+          <div class="group-label">Ferramentas</div>
+          <a class="navlink" data-route="diario" href="#/diario">📓 Diário de experimentos</a>
+          <a class="navlink" data-route="limites" href="#/limites">Limites do curso</a>
+          <a class="navlink" data-route="ia" href="#/ia">IA de forma responsável</a>
+        </div>
+      </nav>
+    </div>
+    <div class="sidebar-foot">Material de estudo independente, sem vínculo com a organização da OIAA. Regras e prazos oficiais em <b style="color:#fff;">olimpiadadeia.ceia.digital</b>.</div>
+  </aside>
+  <main id="app"></main>
+</div>
+
+<script>
+/* ============================ DADOS ============================ */
+const MODULES = [
+ {id:0, cor:'purple', titulo:'Orientação, integridade e autoria'},
+ {id:1, cor:'purple', titulo:'Modelo mental de classificação'},
+ {id:2, cor:'purple', titulo:'Dados e exploração'},
+ {id:3, cor:'purple', titulo:'Treino, validação e teste'},
+ {id:4, cor:'purple', titulo:'Métricas e matriz de confusão'},
+ {id:5, cor:'purple', titulo:'Comparação de modelos e hiperparâmetros'},
+ {id:6, cor:'blue',   titulo:'Trilha de dados tabulares'},
+ {id:7, cor:'green',  titulo:'Trilha de descritores de imagem'},
+ {id:8, cor:'pink',   titulo:'Trilha de texto e linguagem natural'},
+ {id:9, cor:'purple', titulo:'Ciclo completo em ambiente sintético'},
+ {id:10,cor:'purple', titulo:'Diário de experimentos e relatório'},
+ {id:11,cor:'purple', titulo:'Simulação de decisão'},
+ {id:12,cor:'purple', titulo:'Checklist final'},
+];
+
+const CHECKLIST_ITEMS = [
+ {t:'Explicar caso, característica, classe, modelo e previsão', mod:1},
+ {t:'Diferenciar treino, validação e teste', mod:3},
+ {t:'Explicar parâmetro e hiperparâmetro', mod:1},
+ {t:'Identificar a variável-alvo em uma tabela', mod:2},
+ {t:'Reconhecer riscos de vazamento de dados', mod:2},
+ {t:'Interpretar o F1-macro sem ignorar nenhuma classe', mod:4},
+ {t:'Ler uma matriz de confusão e apontar onde o modelo erra', mod:4},
+ {t:'Comparar experimentos controlados, mudando uma escolha por vez', mod:5},
+ {t:'Formular uma hipótese testável', mod:5},
+ {t:'Registrar um teste com números, não só impressões', mod:10},
+ {t:'Explicar as limitações de uma solução', mod:9},
+ {t:'Raciocinar sobre dados tabulares, de imagem e de texto no nível conceitual', mod:6},
+ {t:'Preservar a autoria e saber onde consultar as regras oficiais', mod:0},
+ {t:'Executar um caderno de cima para baixo, conferir lacunas e organizar os arquivos de envio sem depender de um notebook pronto', mod:9},
+];
+
+/* ============================ MASCOTE ============================ */
+/* Ilustração própria, no espírito da capivara-mascote do guia oficial (não é uma cópia da arte oficial) */
+function capybaraSVG(){
+  return `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="32" cy="40" rx="19" ry="15" fill="var(--capy-body)"/>
+    <ellipse cx="20" cy="27" rx="5" ry="5" fill="var(--capy-body-dark)"/>
+    <ellipse cx="44" cy="27" rx="5" ry="5" fill="var(--capy-body-dark)"/>
+    <ellipse cx="32" cy="34" rx="14" ry="12" fill="var(--capy-body)"/>
+    <ellipse cx="32" cy="40" rx="9" ry="6" fill="var(--capy-snout)"/>
+    <circle cx="26" cy="30" r="1.6" fill="#2A1B0E"/>
+    <circle cx="38" cy="30" r="1.6" fill="#2A1B0E"/>
+    <ellipse cx="27" cy="40" rx="1.3" ry="1" fill="#2A1B0E"/>
+    <ellipse cx="37" cy="40" rx="1.3" ry="1" fill="#2A1B0E"/>
+    <path d="M28 44c1.5 1.4 6.5 1.4 8 0" stroke="#2A1B0E" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M15 24c-2-4 0-8 4-8" stroke="var(--purple-700)" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M18 20c4-3 24-3 28 0" stroke="var(--purple-700)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M15 21c4-4 30-4 34 1" stroke="var(--yellow)" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>`;
+}
+function mascotTip(html){
+  return `<div class="mascot-tip">${capybaraSVG()}<div class="bubble">${html}</div></div>`;
+}
+
+/* ============================ ESTADO ============================ */
+const STORAGE_KEY = 'oiaa_trilha_v1';
+function defaultState(){
+  const modules = {};
+  MODULES.forEach(m=>modules[m.id]={status:'not-started', attempts:[], activity:''});
+  return {diagnostic:{done:false, answers:{}}, modules, diario:[], checklist:{}, testPeeks:0};
+}
+let state = loadState();
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+    const d = defaultState();
+    return Object.assign(d, parsed, {modules:Object.assign(d.modules, parsed.modules||{})});
+  }catch(e){ return defaultState(); }
+}
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+function isUnlocked(id){
+  if(id===0) return true;
+  return state.modules[id-1] && state.modules[id-1].status==='done';
+}
+function markDone(id){
+  state.modules[id].status='done';
+  saveState();
+  renderSidebar();
+}
+function markInProgress(id){
+  if(state.modules[id].status==='not-started') state.modules[id].status='in-progress';
+  saveState();
+  renderSidebar();
+}
+
+/* ============================ ROTEADOR ============================ */
+function currentRoute(){
+  const h = location.hash.replace('#/','') || 'painel';
+  return h;
+}
+window.addEventListener('hashchange', render);
+window.addEventListener('DOMContentLoaded', ()=>{ renderSidebar(); render(); });
+
+function renderSidebar(){
+  const nav = document.getElementById('module-nav');
+  nav.innerHTML = MODULES.map(m=>{
+    const st = state.modules[m.id].status;
+    const unlocked = isUnlocked(m.id);
+    const cls = ['navlink'];
+    if(!unlocked) cls.push('locked');
+    if(st==='done') cls.push('done');
+    return `<a class="${cls.join(' ')}" href="#/modulo/${m.id}" data-route="modulo-${m.id}">
+      <span class="num">${unlocked ? (st==='done'?'✓':m.id) : '🔒'}</span>
+      <span>${m.titulo}</span>
+    </a>`;
+  }).join('');
+  document.querySelectorAll('.navlink').forEach(a=>a.classList.remove('active'));
+  const route = currentRoute();
+  let key = route.startsWith('modulo/') ? 'modulo-'+route.split('/')[1] : route;
+  const active = document.querySelector(`.navlink[data-route="${key}"]`);
+  if(active) active.classList.add('active');
+}
+
+const RUNNINGHEAD = `<div class="runninghead"><span>TRILHA DE PREPARAÇÃO · NÃO OFICIAL</span><span class="rh-right">OIAA 2026</span></div>`;
+const PAGEBAR = `<div class="pagebar"><span>Trilha de preparação <b>· não oficial</b></span><span class="flag">OIAA 2026</span></div>`;
+function wrap(innerHtml){
+  return RUNNINGHEAD + `<div class="pagecontent">` + innerHtml + `</div>` + PAGEBAR;
+}
+function render(){
+  renderSidebar();
+  const route = currentRoute();
+  const app = document.getElementById('app');
+  if(route==='painel'){ app.innerHTML = wrap(viewPainel()); return; }
+  if(route==='diagnostico'){ app.innerHTML = RUNNINGHEAD+'<div class="pagecontent" id="pc"></div>'+PAGEBAR; renderDiagnostico(document.getElementById('pc')); return; }
+  if(route==='diario'){ app.innerHTML = RUNNINGHEAD+'<div class="pagecontent" id="pc"></div>'+PAGEBAR; renderDiario(document.getElementById('pc')); return; }
+  if(route==='limites'){ app.innerHTML = wrap(viewLimites()); return; }
+  if(route==='ia'){ app.innerHTML = wrap(viewIA()); return; }
+  if(route.startsWith('modulo/')){
+    const id = parseInt(route.split('/')[1]);
+    app.innerHTML = RUNNINGHEAD+'<div class="pagecontent" id="pc"></div>'+PAGEBAR;
+    renderModulo(document.getElementById('pc'), id);
+    return;
+  }
+  app.innerHTML = wrap(viewPainel());
+}
+
+/* ============================ HELPERS DE UI ============================ */
+function progressPct(){
+  const done = MODULES.filter(m=>state.modules[m.id].status==='done').length;
+  return Math.round(done/MODULES.length*100);
+}
+function statusLabel(st){ return st==='done'?'Concluído':st==='in-progress'?'Em andamento':'Não iniciado'; }
+function statusClass(st){ return st==='done'?'done':st==='in-progress'?'ip':'ns'; }
+
+/* ============================ PAINEL ============================ */
+function viewPainel(){
+  const pct = progressPct();
+  const diagDone = state.diagnostic.done;
+  return `
+  <div class="pagehead">
+    <div class="eyebrow">PAINEL</div>
+    <h1>Trilha de Preparação — OIAA 2026</h1>
+    <p class="desc">Um espaço de estudo para compreender e tomar decisões nos cadernos dos três desafios da Fase 1. Este curso não resolve os desafios, não usa dados oficiais e não gera arquivos de submissão — quem decide é você.</p>
+  </div>
+
+  ${mascotTip('Vinte minutos aqui hoje poupam uma tarde de dúvida depois — comecem pelo diagnóstico ou direto pelo Módulo 0.')}
+
+  <div class="progresswrap">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <strong>Progresso geral</strong>
+      <span class="small">${pct}% dos módulos concluídos</span>
+    </div>
+    <div class="progressbar"><div style="width:${pct}%"></div></div>
+    ${!diagDone ? `<div style="margin-top:14px;"><a class="btn" href="#/diagnostico">Fazer o diagnóstico inicial</a> <span class="small">— não vale nota, só ajusta o ponto de partida.</span></div>` : `<div class="small" style="margin-top:10px;">Diagnóstico inicial concluído. Você pode refazê-lo quando quiser em <a href="#/diagnostico">Diagnóstico</a>.</div>`}
+  </div>
+
+  <h2 style="font-size:1rem;color:var(--purple-900);margin-bottom:12px;">Módulos</h2>
+  <div class="modgrid">
+    ${MODULES.map(m=>{
+      const st = state.modules[m.id].status;
+      const unlocked = isUnlocked(m.id);
+      return `<a class="modcard tag-${m.cor} ${unlocked?'':'locked'}" href="#/modulo/${m.id}">
+        <div class="top">
+          <div class="numchip">${String(m.id).padStart(2,'0')}</div>
+          <div class="title">${m.titulo}</div>
+        </div>
+        <div class="status ${statusClass(st)}">${unlocked ? statusLabel(st) : 'Bloqueado'}</div>
+      </a>`;
+    }).join('')}
+  </div>
+
+  <footer class="pagefoot">
+    Preparação conceitual apenas. Antes de trabalhar nos desafios reais, confira o regulamento, as regras de autoria, os prazos e as instruções oficiais em <strong>olimpiadadeia.ceia.digital</strong>.
+  </footer>
+  `;
+}
+
+/* ============================ DIAGNÓSTICO INICIAL ============================ */
+const DIAG_QUESTIONS = [
+  {id:'q1', t:'Você já treinou algum modelo de classificação antes (em aula, curso ou por conta própria)?', opts:['Nunca','Já vi o conceito, nunca treinei','Já treinei pelo menos um modelo']},
+  {id:'q2', t:'Você sabe explicar, em poucas palavras, a diferença entre treino e teste?', opts:['Não sei','Tenho uma ideia, mas não tenho certeza','Sim, sei explicar']},
+  {id:'q3', t:'Você já leu ou calculou uma matriz de confusão?', opts:['Nunca ouvi falar','Já ouvi falar, nunca li uma','Já li ou calculei']},
+  {id:'q4', t:'Como você se sente lendo uma tabela de dados (linhas, colunas, tipos de variável)?', opts:['Pouco confortável','Confortável com o básico','Muito confortável']},
+];
+function renderDiagnostico(app){
+  app.innerHTML = `
+  <div class="pagehead">
+    <div class="eyebrow">DIAGNÓSTICO</div>
+    <h1>Diagnóstico inicial</h1>
+    <p class="desc">Sem nota, sem certo ou errado. Serve só para sugerir por onde começar. Responda com sinceridade — o que você não sabe ainda é exatamente o que este curso existe para ensinar.</p>
+  </div>
+  <div class="card">
+    <form id="diag-form">
+      ${DIAG_QUESTIONS.map(q=>`
+        <div style="margin-bottom:18px;">
+          <label style="margin-bottom:8px;">${q.t}</label>
+          ${q.opts.map((o,i)=>`
+            <label style="font-weight:400;color:var(--ink);display:flex;gap:8px;align-items:center;margin:4px 0;">
+              <input type="radio" name="${q.id}" value="${i}" ${state.diagnostic.answers[q.id]==i?'checked':''}> ${o}
+            </label>`).join('')}
+        </div>
+      `).join('')}
+      <button class="btn" type="submit">Ver sugestão de início</button>
+    </form>
+    <div id="diag-result"></div>
+  </div>
+  `;
+  document.getElementById('diag-form').addEventListener('submit', e=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const answers = {};
+    let total = 0, count=0;
+    DIAG_QUESTIONS.forEach(q=>{ const v = fd.get(q.id); if(v!==null){answers[q.id]=Number(v); total+=Number(v); count++;} });
+    state.diagnostic = {done:true, answers};
+    saveState();
+    const avg = count? total/count : 0;
+    let msg;
+    if(avg < 0.8) msg = 'Sugestão: comece pelo Módulo 0 e siga em ordem — os módulos 1 a 4 vão construir a base que falta.';
+    else if(avg < 1.6) msg = 'Sugestão: passe rápido pelo Módulo 0 e capriche nos módulos 3 e 4 (validação e métricas), que costumam ser o ponto fraco nessa fase.';
+    else msg = 'Sugestão: revise os módulos 3 a 5 com atenção às armadilhas (vazamento, comparação injusta) e vá direto às trilhas 6, 7 e 8.';
+    document.getElementById('diag-result').innerHTML = `<div class="callout ok">${msg}<br><a class="btn" style="margin-top:10px;" href="#/modulo/0">Ir para o Módulo 0</a></div>`;
+  });
+}
+
+/* ============================ COMPONENTE: LOOP DE ESTUDO ============================ */
+/* Implementa Estados A-F de forma simplificada e reutilizável */
+let loopCounter = 0;
+function loopCard({modId, key, pergunta, dica, transferencia, conceito, avaliar}){
+  const uid = 'loop_'+(loopCounter++);
+  const saved = (state.modules[modId].attempts||[]).find(a=>a.key===key);
+  setTimeout(()=>{
+    const el = document.getElementById(uid);
+    if(!el) return;
+    const hintBtn = el.querySelector('.btn-hint');
+    const hintBox = el.querySelector('.hintbox');
+    const conceptBtn = el.querySelector('.btn-concept');
+    const conceptBox = el.querySelector('.conceptbox');
+    const textarea = el.querySelector('textarea[name=attempt]');
+    const transfer = el.querySelector('textarea[name=transfer]');
+    const conf = el.querySelector('select[name=conf]');
+    const saveBtn = el.querySelector('.btn-save');
+    const note = el.querySelector('.savednote');
+    if(saved){ textarea.value = saved.attempt||''; if(transfer) transfer.value = saved.transfer||''; if(conf) conf.value = saved.conf||3; }
+    hintBtn.addEventListener('click', ()=>hintBox.classList.toggle('show'));
+    conceptBtn.addEventListener('click', ()=>conceptBox.classList.toggle('show'));
+    saveBtn.addEventListener('click', ()=>{
+      const attempts = state.modules[modId].attempts||[];
+      const rec = {key, pergunta, attempt:textarea.value, transfer: transfer?transfer.value:'', conf: conf?conf.value:'', data:new Date().toISOString()};
+      const idx = attempts.findIndex(a=>a.key===key);
+      if(idx>=0) attempts[idx]=rec; else attempts.push(rec);
+      state.modules[modId].attempts = attempts;
+      state.diario.push({auto:true, origem:`Módulo ${modId}`, hipotese:pergunta, decisao:textarea.value, data:new Date().toLocaleDateString('pt-BR')});
+      markInProgress(modId);
+      saveState();
+      note.classList.add('show');
+      conceptBox.classList.add('show');
+    });
+  },0);
+  return `
+  <div class="loop" id="${uid}">
+    <div class="stage">Diagnóstico → tentativa</div>
+    <h4>${pergunta}</h4>
+    ${avaliar ? `<p class="small" style="margin-top:-6px;">O que será avaliado na sua explicação: ${avaliar}</p>` : ''}
+    <label>Sua tentativa (explique o raciocínio, não só a conclusão)</label>
+    <textarea name="attempt" placeholder="Escreva sua resposta antes de ver a pista ou o conceito..."></textarea>
+    <div class="row-btns">
+      <button type="button" class="btn secondary btn-hint">Ver uma pista</button>
+      <button type="button" class="btn secondary btn-concept">Ver a explicação do conceito</button>
+    </div>
+    <div class="hintbox">💡 ${dica}</div>
+    <div class="conceptbox">📘 <strong>Conceito:</strong> ${conceito}</div>
+    ${transferencia ? `
+      <label>Transferência — aplique o mesmo raciocínio a um exemplo novo e fictício</label>
+      <textarea name="transfer" placeholder="${transferencia}"></textarea>
+    ` : ''}
+    <label>Seu nível de confiança nessa resposta</label>
+    <select name="conf">
+      <option value="1">1 — chutei</option>
+      <option value="2">2 — insegurofa</option>
+      <option value="3" selected>3 — razoável</option>
+      <option value="4">4 — confiante</option>
+      <option value="5">5 — domino o conceito</option>
+    </select>
+    <div class="row-btns">
+      <button type="button" class="btn btn-save">Registrar tentativa</button>
+    </div>
+    <div class="savednote ${saved?'show':''}">Registrado no seu diário de experimentos.</div>
+  </div>`;
+}
+
+function moduleFooter(id){
+  const nextId = id+1;
+  const hasNext = MODULES.find(m=>m.id===nextId);
+  return `
+  <div class="row-btns" style="margin-top:24px;">
+    <button class="btn" onclick="markDone(${id}); render();">Marcar módulo como concluído</button>
+    ${hasNext ? `<a class="btn secondary" href="#/modulo/${nextId}">Ir para o próximo módulo →</a>` : `<a class="btn secondary" href="#/modulo/12">Ir para o checklist final →</a>`}
+  </div>`;
+}
+
+/* ============================ MÓDULOS ============================ */
+function renderModulo(app, id){
+  if(!isUnlocked(id)){
+    app.innerHTML = `<div class="pagehead"><h1>Módulo bloqueado</h1><p class="desc">Conclua o módulo anterior para desbloquear este.</p><a class="btn" href="#/painel">Voltar ao painel</a></div>`;
+    return;
+  }
+  markInProgress(id);
+  const m = MODULES.find(x=>x.id===id);
+  let html = `<div class="chapterblock"><div class="num">${String(id).padStart(2,'0')}</div><div class="txt"><div class="k">Módulo ${id}</div><h2>${m.titulo}</h2></div></div>`;
+  html += MODULE_BUILDERS[id](id);
+  html += moduleFooter(id);
+  app.innerHTML = html;
+  if(MODULE_INIT[id]) setTimeout(()=>MODULE_INIT[id](id), 0);
+}
+const MODULE_INIT = {
+  3:()=>{
+    function seedShuffle(arr, seed){
+      let s = seed;
+      const rnd = ()=>{ s = (s*9301+49297)%233280; return s/233280; };
+      return arr.map(v=>[v,rnd()]).sort((a,b)=>a[1]-b[1]).map(v=>v[0]);
+    }
+    function draw(){
+      const val = document.getElementById('tvt-slider').value;
+      document.getElementById('tvt-valpct').textContent = val+'%';
+      const N = 60;
+      const testN = 15;
+      const valN = Math.round((N-testN)*val/100);
+      let idxs = Array.from({length:N}, (_,i)=>i);
+      idxs = seedShuffle(idxs, Date.now()%100000);
+      const dots = idxs.map((v,pos)=>{
+        let cls='train';
+        if(pos < testN) cls='test';
+        else if(pos < testN+valN) cls='val';
+        return '<div class="dot '+cls+'"></div>';
+      });
+      document.getElementById('tvt-dots').innerHTML = dots.join('');
+    }
+    document.getElementById('tvt-slider').addEventListener('input', draw);
+    document.getElementById('tvt-shuffle').addEventListener('click', draw);
+    document.getElementById('tvt-peek').addEventListener('click', function(){
+      window.__testPeeks = (window.__testPeeks||0)+1;
+      const w = document.getElementById('tvt-warning');
+      if(window.__testPeeks<3){
+        w.innerHTML = '<p class="small">Desempenho fictício no teste: F1-macro ~ 0.'+(70+window.__testPeeks*3)+'</p>';
+      } else {
+        w.innerHTML = '<div class="callout danger">Você já consultou o teste '+window.__testPeeks+' vezes nesta sessão. Na prática, isso deixaria de ser avaliação e passaria a orientar suas escolhas — o mesmo problema que aparece quando uma equipe re-treina só olhando o placar do teste.</div>';
+      }
+    });
+    draw();
+  },
+  4:()=>{
+    const classes = ['A','B','C'];
+    let matrix = [[18,2,0],[1,14,2],[0,3,9]];
+    function computeAndRender(){
+      const n = classes.length;
+      const rowSum = matrix.map(r=>r.reduce((a,b)=>a+b,0));
+      const colSum = classes.map((_,j)=>matrix.reduce((a,r)=>a+r[j],0));
+      let f1s = [];
+      let rows = '';
+      for(let i=0;i<n;i++){
+        const tp = matrix[i][i];
+        const fp = colSum[i]-tp;
+        const fn = rowSum[i]-tp;
+        const prec = (tp+fp)>0 ? tp/(tp+fp) : 0;
+        const rec = (tp+fn)>0 ? tp/(tp+fn) : 0;
+        const f1 = (prec+rec)>0 ? 2*prec*rec/(prec+rec) : 0;
+        f1s.push(f1);
+        rows += '<tr><td>'+classes[i]+'</td><td>'+prec.toFixed(2)+'</td><td>'+rec.toFixed(2)+'</td><td>'+f1.toFixed(2)+'</td></tr>';
+      }
+      const macro = f1s.reduce((a,b)=>a+b,0)/n;
+      document.getElementById('cm-metrics').innerHTML =
+        '<tr><th>classe</th><th>precisão</th><th>recall</th><th>F1</th></tr>'+rows+
+        '<tr><td colspan=3 class="macro">F1-macro</td><td class="macro">'+macro.toFixed(3)+'</td></tr>';
+      let maxOff = {v:-1,i:0,j:0};
+      for(let i=0;i<n;i++) for(let j=0;j<n;j++) if(i!==j && matrix[i][j]>maxOff.v) maxOff={v:matrix[i][j],i,j};
+      document.getElementById('cm-confusao').textContent = maxOff.v>0
+        ? 'Maior confusão: '+maxOff.v+' casos reais da classe '+classes[maxOff.i]+' foram previstos como '+classes[maxOff.j]+'.'
+        : 'Sem confusões fora da diagonal.';
+    }
+    function renderTable(){
+      let head = '<tr><th></th>'+classes.map(c=>'<th>prev. '+c+'</th>').join('')+'</tr>';
+      let body = matrix.map((row,i)=>'<tr><th>real '+classes[i]+'</th>'+row.map((v,j)=>
+        '<td><input type="number" min="0" data-i="'+i+'" data-j="'+j+'" value="'+v+'"></td>').join('')+'</tr>').join('');
+      document.getElementById('cm-table').innerHTML = head+body;
+      document.querySelectorAll('#cm-table input').forEach(inp=>{
+        inp.addEventListener('input', e=>{
+          matrix[+e.target.dataset.i][+e.target.dataset.j] = Number(e.target.value)||0;
+          computeAndRender();
+        });
+      });
+    }
+    renderTable();
+    computeAndRender();
+  },
+  7:()=>{
+    function genColor(){
+      const h = Math.floor(Math.random()*360);
+      return 'hsl('+h+',65%,55%)';
+    }
+    function gen(){
+      const grid = document.getElementById('shape-grid');
+      if(!grid) return;
+      grid.innerHTML = Array.from({length:16},()=>'<div class="geng" style="background:'+genColor()+'"></div>').join('');
+    }
+    document.getElementById('shape-gen').addEventListener('click', gen);
+    gen();
+  },
+  9:()=>{
+    function seedRand(seed){ let s=seed; return ()=>{ s=(s*9301+49297)%233280; return s/233280; }; }
+    function gen(){
+      const rnd = seedRand(Date.now()%100000);
+      let rows = '<table class="metrics" style="width:100%;"><tr><th>caso</th><th>var_1</th><th>var_2</th><th>classe</th></tr>';
+      for(let i=1;i<=6;i++){
+        const v1 = Math.round(rnd()*100);
+        const v2 = (rnd()*10).toFixed(1);
+        const cls = ['P','Q','R'][Math.floor(rnd()*3)];
+        rows += '<tr><td>'+i+'</td><td>'+v1+'</td><td>'+v2+'</td><td>'+cls+'</td></tr>';
+      }
+      rows += '</table>';
+      document.getElementById('mini-table').innerHTML = rows;
+    }
+    document.getElementById('mini-gen').addEventListener('click', gen);
+    gen();
+  },
+  11:()=>{
+    const btn = document.querySelector('.btn-save-scen');
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      const txt = document.getElementById('scenA-text').value;
+      const tag = document.getElementById('scenA-tag').value;
+      state.diario.push({auto:true, origem:'Módulo 11 — Cenário A', hipotese:tag, decisao:txt, data:new Date().toLocaleDateString('pt-BR')});
+      saveState();
+      document.getElementById('scenA-note').classList.add('show');
+    });
+  },
+  12:()=>{
+    document.querySelectorAll('.checklist input').forEach(cb=>{
+      cb.addEventListener('change', e=>{
+        state.checklist[e.target.dataset.idx] = e.target.checked;
+        saveState();
+      });
+    });
+  },
+};
+
+const MODULE_BUILDERS = {
+
+  0:(id)=>`
+    <p>Este curso existe para te preparar a <strong>pensar como a equipe vai decidir</strong> dentro dos cadernos da Fase 1 — não para decidir por você.</p>
+    ${mascotTip('Leiam este módulo com calma antes de abrir qualquer caderno real. Vinte minutos aqui hoje poupam retrabalho depois.')}
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>O curso ensina conceitos e dá prática com dados sintéticos, fora dos três desafios reais.</li>
+        <li>Aprender é diferente de copiar: aprender é conseguir refazer o raciocínio em um caso novo.</li>
+      </ul></div>
+      <div class="marker fazer"><span class="mk-label">Fazer</span><ul>
+        <li>Mantenha um diário de decisões (Módulo 10) desde o primeiro teste.</li>
+        <li>Se usar IA generativa nos desafios reais, registre a ferramenta, a finalidade e o que a equipe verificou.</li>
+      </ul></div>
+      <div class="marker cumprir"><span class="mk-label">Cumprir</span><ul>
+        <li>Este site não acessa a plataforma oficial nem pede login, token ou dado pessoal.</li>
+        <li>A autoria da solução dos desafios precisa ser da equipe.</li>
+      </ul></div>
+      <div class="marker apoio"><span class="mk-label">Apoio</span><ul>
+        <li>Dúvidas sobre regras oficiais: consulte o edital e os canais oficiais da OIAA.</li>
+      </ul></div>
+    </div>
+
+    <div class="callout danger">
+      <strong>Este curso nunca vai:</strong> resolver os três desafios oficiais, revelar hiperparâmetros "vencedores", gerar um arquivo de submissão, usar dados reais da competição ou aceitar suas credenciais da plataforma.
+    </div>
+
+    ${loopCard({
+      modId:id, key:'autoria',
+      pergunta:'Com suas próprias palavras: qual tipo de ajuda você considera aceitável durante os desafios, e qual tipo ultrapassa o limite da autoria?',
+      dica:'Pense em uma régua: de um lado, "entender e decidir com apoio"; do outro, "receber uma solução pronta e entregar como se fosse sua". Onde fica o uso de IA generativa para tirar dúvidas? E para escrever o código inteiro?',
+      conceito:'Apoio aceitável é o que ajuda você a entender e decidir — tutor, aulões, IA generativa para esclarecer conceitos, desde que a equipe registre, verifique e adapte cada sugestão. Ultrapassa o limite copiar uma solução pronta (de outra equipe ou de uma IA) sem compreensão demonstrada, ou deixar que outra pessoa/ferramenta decida no seu lugar.',
+      avaliar:'clareza da distinção que você traçou, não se ela "bate" com um gabarito.'
+    })}
+  `,
+
+  1:(id)=>`
+    <p>Todo desafio da Fase 1 — tabela, imagem ou texto — segue o mesmo esqueleto: <strong>caso → características → modelo → classe</strong>.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li><strong>Caso:</strong> a unidade que está sendo classificada (um estudante, uma foto, uma avaliação).</li>
+        <li><strong>Característica:</strong> uma informação que descreve o caso (faltas, brilho médio, uma palavra).</li>
+        <li><strong>Classe:</strong> a resposta possível (baixo/médio/alto, por exemplo).</li>
+        <li><strong>Modelo:</strong> o programa que aprendeu, com exemplos, a associar características a classes.</li>
+        <li><strong>Parâmetro</strong> é o que o modelo ajusta sozinho durante o treino; <strong>hiperparâmetro</strong> é a escolha que a equipe faz antes de treinar (ex.: profundidade máxima de uma árvore).</li>
+      </ul></div>
+      <div class="marker fazer"><span class="mk-label">Fazer</span><ul>
+        <li>Em qualquer conjunto de dados novo, identifique primeiro o caso, depois as características, depois a classe.</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <h3>Exemplo neutro (não é um desafio oficial)</h3>
+      <p class="small">Imagine classificar frutas fictícias de um pomar inventado, em três classes: <em>verde</em>, <em>madura</em>, <em>passada</em>.</p>
+      <table class="metrics" style="width:100%;"><tr><th>caso</th><th>peso (g)</th><th>cor (0-10)</th><th>firmeza (0-10)</th><th>classe</th></tr>
+      <tr><td>fruta 1</td><td>120</td><td>3</td><td>8</td><td>verde</td></tr>
+      <tr><td>fruta 2</td><td>135</td><td>7</td><td>5</td><td>madura</td></tr>
+      <tr><td>fruta 3</td><td>110</td><td>9</td><td>2</td><td>passada</td></tr></table>
+      <p class="small" style="margin-top:10px;">Aqui: <em>caso</em> = cada fruta; <em>características</em> = peso, cor, firmeza; <em>classe</em> = a coluna final.</p>
+    </div>
+
+    ${loopCard({
+      modId:id, key:'modelo-mental',
+      pergunta:'Em um conjunto fictício sobre "nível de manutenção de robôs de cozinha inventados" com colunas horas_de_uso, temperatura_media, numero_de_erros e nivel_manutencao (baixo/médio/alto), identifique o caso, as características e a classe.',
+      dica:'A classe costuma ser a última coluna, a que você quer prever. As demais colunas — exceto identificadores como um "id" — geralmente são características.',
+      transferencia:'Agora faça o mesmo para um conjunto fictício sobre "satisfação de visitantes de um parque inventado", com as colunas tempo_de_fila, numero_de_atracoes_visitadas, clima e satisfacao (satisfeito/insatisfeito).',
+      conceito:'Caso = cada robô (uma linha). Características = horas_de_uso, temperatura_media, numero_de_erros. Classe = nivel_manutencao. O mesmo padrão se repete em qualquer tabela: a coluna que você quer prever é a classe; o resto (menos identificadores) são características.',
+      avaliar:'se você separou corretamente características de classe, e se justificou por quê.'
+    })}
+  `,
+
+  2:(id)=>`
+    <p>Antes de treinar qualquer modelo, a equipe observa os dados. Aqui a tarefa é <strong>investigar</strong>, não decidir sozinho o tratamento "certo".</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>Formato dos dados: linhas, colunas, tipos de variável (numérica, categórica).</li>
+        <li>Variável-alvo: a coluna que define a classe.</li>
+        <li>Valores ausentes, categorias raras, valores extremos, duplicatas.</li>
+        <li>Escalas diferentes entre colunas (ex.: uma vai de 0 a 1, outra de 0 a 10000).</li>
+        <li><strong>Vazamento de dados:</strong> quando uma característica "entrega" a resposta por um caminho indireto (ex.: uma coluna calculada a partir da própria classe).</li>
+      </ul></div>
+      <div class="marker fazer"><span class="mk-label">Fazer</span><ul>
+        <li>Compare a distribuição de cada característica entre as classes antes de treinar.</li>
+        <li>Desconfie de uma característica que separa as classes "perfeitamente demais".</li>
+      </ul></div>
+    </div>
+    <div class="card">
+      <h3>Conjunto sintético com problemas inseridos de propósito</h3>
+      <table class="metrics" style="width:100%;"><tr><th>caso</th><th>idade_maquina</th><th>temperatura</th><th>score_pos_falha</th><th>classe</th></tr>
+      <tr><td>1</td><td>3</td><td>72</td><td>0</td><td>baixo</td></tr>
+      <tr><td>2</td><td>—</td><td>81</td><td>1</td><td>alto</td></tr>
+      <tr><td>3</td><td>3</td><td>9999</td><td>0</td><td>baixo</td></tr>
+      <tr><td>4</td><td>7</td><td>75</td><td>1</td><td>alto</td></tr></table>
+      <p class="small" style="margin-top:10px;">Note: um valor ausente, um valor extremo isolado (9999°) e uma coluna "score_pos_falha" que parece calculada depois do problema acontecer — um possível vazamento.</p>
+    </div>
+    ${loopCard({
+      modId:id, key:'exploracao',
+      pergunta:'Olhando a tabela acima, o que você investigaria antes de treinar um modelo, e por quê?',
+      dica:'Pense em três perguntas separadas: "isso é um erro de digitação ou um valor real?", "essa coluna existiria no momento em que eu preciso prever?", "essa coluna, sozinha, já entrega a resposta?"',
+      conceito:'Um bom roteiro de exploração separa: (1) problemas de qualidade (ausência, digitação, duplicata), (2) problemas de escala/distribuição, (3) risco de vazamento — uma característica só é válida se estaria disponível no momento real da previsão, sem "espiar" o resultado.',
+      avaliar:'se você distinguiu qualidade de dados de risco de vazamento, com uma justificativa concreta para cada ponto.'
+    })}
+  `,
+
+  3:(id)=>{
+    return `
+    <p>Treino, validação e teste têm papéis diferentes — misturá-los é o erro mais comum e mais silencioso.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li><strong>Treino:</strong> o modelo aprende os padrões, com a resposta correta visível.</li>
+        <li><strong>Validação:</strong> a equipe usa para comparar configurações, também com a resposta visível.</li>
+        <li><strong>Teste:</strong> mede o desempenho "de verdade" — deve ser consultado o mínimo possível, nunca para escolher configuração.</li>
+      </ul></div>
+      <div class="marker cumprir"><span class="mk-label">Cumprir</span><ul>
+        <li>Se você troca de configuração só porque o teste "gostou mais", o teste deixou de medir e virou treino disfarçado.</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <h3>Simulador — sorteio de treino / validação / teste</h3>
+      <p class="small">60 casos fictícios. Ajuste a fatia de validação e sorteie novamente para ver como a divisão muda a cada sorteio.</p>
+      <label>Fatia de validação: <span id="tvt-valpct">25%</span></label>
+      <input type="range" id="tvt-slider" min="10" max="40" value="25">
+      <div class="row-btns">
+        <button type="button" class="btn secondary" id="tvt-shuffle">🎲 Novo sorteio</button>
+        <button type="button" class="btn secondary" id="tvt-peek">👁 Consultar desempenho no teste</button>
+      </div>
+      <div class="dots" id="tvt-dots"></div>
+      <div class="legend">
+        <span><i style="background:var(--purple-700)"></i>treino</span>
+        <span><i style="background:var(--blue)"></i>validação</span>
+        <span><i style="background:var(--pink)"></i>teste</span>
+      </div>
+      <div id="tvt-warning"></div>
+    </div>
+
+    ${loopCard({
+      modId:id, key:'tvt',
+      pergunta:'Depois de usar o simulador: que decisão seria influenciada indevidamente se você consultasse o teste repetidamente para escolher hiperparâmetros?',
+      dica:'Pense no que acontece se você ajusta a "profundidade da árvore" toda vez olhando o resultado no teste — o teste passa a fazer parte do processo de escolha, não é mais uma medida independente.',
+      transferencia:'Descreva uma situação (fora dos desafios da OIAA) em que alguém, sem perceber, "vazou" informação do teste para dentro do processo de decisão.',
+      conceito:'A validação existe para você poder errar, comparar e ajustar quantas vezes quiser. O teste existe para responder uma vez, com uma configuração já decidida — se ele orienta escolhas repetidamente, deixa de estimar a generalização real e passa a superestimar o desempenho.',
+      avaliar:'se você reconheceu que o problema não é "olhar uma vez", mas "usar o resultado para decidir".'
+    })}
+    `;
+  },
+
+  4:(id)=>`
+    <p>Um número só pode esconder o que importa. A matriz de confusão mostra <em>onde</em> o modelo erra; o F1-macro garante que a classe rara pese tanto quanto a frequente.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li><strong>Precisão:</strong> das vezes que o modelo disse "classe X", quantas realmente eram X.</li>
+        <li><strong>Revocação (recall):</strong> dos casos que realmente eram X, quantos o modelo encontrou.</li>
+        <li><strong>F1:</strong> equilíbrio entre precisão e revocação de uma classe.</li>
+        <li><strong>F1-macro:</strong> a média do F1 de cada classe, com peso igual — não favorece a classe mais frequente.</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <h3>Simulador — matriz de confusão e F1-macro</h3>
+      <p class="small">Edite os números (linha = classe real, coluna = classe prevista) e veja as métricas mudarem.</p>
+      <div class="cmwrap">
+        <table class="cm" id="cm-table"></table>
+        <div>
+          <table class="metrics" id="cm-metrics"></table>
+          <p class="small" id="cm-confusao" style="max-width:260px;margin-top:10px;"></p>
+        </div>
+      </div>
+    </div>
+
+    ${loopCard({
+      modId:id, key:'metricas',
+      pergunta:'Ajuste a matriz até que uma classe tenha recall baixo mesmo com acurácia geral alta. Em que situação real (fora da OIAA) um recall baixo numa classe rara seria grave?',
+      dica:'Pense em contextos onde "deixar passar" a classe rara custa caro — diagnóstico, fraude, falha de segurança.',
+      conceito:'Acurácia mede o acerto geral e pode parecer ótima mesmo quando o modelo ignora completamente uma classe minoritária. O F1-macro corrige isso ao tratar cada classe com peso igual — por isso é a métrica oficial dos três desafios da Fase 1.',
+      avaliar:'se o exemplo que você deu realmente mostra por que ignorar a classe rara é grave, não só "porque a métrica manda".'
+    })}
+  `,
+
+  5:(id)=>`
+    <p>Comparar modelos e hiperparâmetros é um processo, não uma receita: linha de base → hipótese → um teste controlado por vez → registro → comparação justa.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>Mude <strong>uma</strong> coisa por vez — se você troca o modelo e a fatia de validação ao mesmo tempo, não sabe qual mudança causou o efeito.</li>
+        <li>Verifique estabilidade: um resultado que só aparece com uma semente aleatória específica é frágil.</li>
+      </ul></div>
+    </div>
+    <div class="card">
+      <h3>Três experimentos fictícios</h3>
+      <table class="metrics" style="width:100%;">
+        <tr><th>experimento</th><th>modelo</th><th>hiperparâmetro</th><th>F1-macro (validação)</th></tr>
+        <tr><td>1</td><td>Árvore</td><td>profundidade = 3</td><td>0.71</td></tr>
+        <tr><td>2</td><td>Árvore</td><td>profundidade = 12</td><td>0.79 (treino: 0.98)</td></tr>
+        <tr><td>3</td><td>Vizinhos (k=5)</td><td>—</td><td>0.76</td></tr>
+      </table>
+    </div>
+    ${loopCard({
+      modId:id, key:'comparacao',
+      pergunta:'Qual desses três experimentos fictícios parece melhor? Que evidência está faltando antes de decidir, e qual seria o próximo teste controlado?',
+      dica:'Repare na diferença entre o F1 de treino e o de validação no experimento 2 — isso tem nome.',
+      conceito:'Um F1 de treino muito acima do F1 de validação é sinal de sobreajuste (overfitting): o modelo decorou o treino em vez de generalizar. Antes de escolher, faltaria testar a estabilidade (repetir com outra semente) e comparar em igualdade de condições (mesma fatia de validação para os três).',
+      avaliar:'se você identificou o sinal de sobreajuste e propôs um teste controlado específico, não só "testar mais".'
+    })}
+  `,
+
+  6:(id)=>`
+    <p>Trilha de dados tabulares — como a Operação Farol, mas com um problema totalmente fictício: níveis de manutenção de máquinas inventadas.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>Variáveis numéricas (contínuas) x categóricas (grupos).</li>
+        <li>Codificação conceitual: transformar categorias em números que o modelo consiga usar.</li>
+        <li>Erros por classe: qual classe o modelo mais confunde, e o custo disso no problema real.</li>
+      </ul></div>
+    </div>
+    <div class="infobox ib-blue"><span class="ib-label">Cenário fictício</span><p class="small" style="margin:0;">Uma tabela de máquinas inventadas com horas_de_uso, temperatura_media, tipo_de_peca (categórica) e nivel_manutencao (baixo/médio/alto). Nenhuma relação com os dados oficiais da Operação Farol.</p></div>
+    ${loopCard({
+      modId:id, key:'tabular',
+      pergunta:'Que padrões você investigaria primeiro nesse conjunto fictício de máquinas, e que evidência sustentaria sua hipótese?',
+      dica:'Comece comparando a distribuição de horas_de_uso entre os três níveis — depois procure combinações (ex.: uso alto + temperatura alta) que só aparecem juntas na classe "alto".',
+      conceito:'Em dados tabulares, o primeiro passo costuma ser: comparar cada característica isoladamente por classe, depois procurar combinações que uma característica sozinha não revela. Uma característica "perfeita demais" é sinal de vazamento, não de sorte.',
+      avaliar:'se sua hipótese é testável e apoiada em uma comparação concreta, não em suposição solta.'
+    })}
+  `,
+
+  7:(id)=>`
+    <p>Trilha de descritores de imagem — como a Missão Recomeço, mas com formas geométricas coloridas geradas artificialmente.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>Uma imagem pode virar números: brilho médio, contraste, densidade de bordas — descritores, não a foto em si.</li>
+        <li>Reduzir uma imagem a estatísticas perde informação; formas parecidas podem gerar descritores parecidos.</li>
+        <li>Iluminação, fundo e enquadramento também mudam os descritores, mesmo sem mudar o objeto.</li>
+      </ul></div>
+    </div>
+    <div class="infobox ib-green">
+      <span class="ib-label">Gerador de formas fictícias</span>
+      <button type="button" class="btn secondary" id="shape-gen">🔄 Gerar novo lote</button>
+      <div class="gengrid" id="shape-grid"></div>
+      <p class="small">Cada quadrado é uma "imagem" sintética só de cor sólida — imagine que o programa calcularia brilho médio e saturação de cada uma.</p>
+    </div>
+    ${loopCard({
+      modId:id, key:'imagem',
+      pergunta:'Que propriedades visuais (brilho, cor, textura...) poderiam separar duas classes fictícias de formas, e como você testaria se essa hipótese realmente generaliza?',
+      dica:'Pense em gerar vários exemplos da mesma classe com iluminação diferente — se a separação desaparece, a hipótese era frágil.',
+      conceito:'Uma hipótese sobre descritores visuais só é confiável se continuar valendo sob variação (iluminação, ângulo, fundo). Testar apenas em condições parecidas tende a superestimar o quanto a característica realmente separa as classes.',
+      avaliar:'se você propôs uma forma concreta de variar as condições para testar a robustez da hipótese.'
+    })}
+  `,
+
+  8:(id)=>`
+    <p>Trilha de texto — como a Voz do Cliente, mas com comentários fictícios sobre um clube de leitura inventado (não compra, entrega ou produto).</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>Texto é dado não estruturado: precisa virar números (vocabulário, tokens) de algum jeito.</li>
+        <li>Negação e ironia mudam o sentido sem mudar as palavras-chave ("não gostei" vs "gostei").</li>
+        <li>A mesma palavra pode aparecer nas duas classes — o contexto é o que decide.</li>
+      </ul></div>
+    </div>
+    <div class="infobox ib-pink">
+      <span class="ib-label">Exemplos fictícios</span>
+      <p class="small" style="margin:0;">"Achei o livro do mês meio arrastado, mas o encontro do clube compensou." — "Confesso que não terminei o livro, mas amei as discussões." — "O livro era bom, só que o grupo simplesmente não teve clima esse mês."</p>
+    </div>
+    ${loopCard({
+      modId:id, key:'texto',
+      pergunta:'Nos três comentários fictícios acima, que contexto está faltando para decidir com segurança se a pessoa ficou satisfeita com o clube?',
+      dica:'Repare que os três misturam elogio e crítica no mesmo comentário — qual parte pesa mais na decisão final da pessoa?',
+      conceito:'Em texto, uma palavra isolada raramente decide a classe. É preciso considerar negação ("não terminei" não é o mesmo que "não gostei"), o peso relativo entre elogio e crítica, e se a avaliação é sobre o produto, o processo ou a experiência como um todo — sinais que só aparecem lendo a frase inteira.',
+      avaliar:'se você apontou uma ambiguidade real do texto, não só "está confuso".'
+    })}
+  `,
+
+  9:(id)=>`
+    <p>Aqui você percorre o ciclo completo — explorar, formular hipótese, configurar, modelar (de forma didática), avaliar, registrar — em três mini-projetos totalmente sintéticos.</p>
+    <div class="markers">
+      <div class="marker fazer"><span class="mk-label">Fazer</span><ul>
+        <li>1. Explorar → 2. Formular hipótese → 3. Definir configuração de teste → 4. Treinar (de forma didática) → 5. Avaliar na validação → 6. Ler a matriz de confusão → 7. Registrar a decisão → 8. Apontar limitações → 9. Propor o próximo experimento.</li>
+      </ul></div>
+      <div class="marker cumprir"><span class="mk-label">Cumprir</span><ul>
+        <li>Nenhum mini-projeto aqui gera arquivo de submissão nem deve ser apresentado como solução da competição.</li>
+      </ul></div>
+    </div>
+    <div class="card">
+      <h3>Prévia de dados sintéticos (semente aleatória, gerados agora)</h3>
+      <button type="button" class="btn secondary" id="mini-gen">🔄 Gerar novo conjunto tabular fictício</button>
+      <div id="mini-table" style="margin-top:10px;"></div>
+    </div>
+    ${loopCard({
+      modId:id, key:'ciclo',
+      pergunta:'Escolha um dos três domínios (tabular, formas, texto) e escreva, passo a passo, as 9 etapas do ciclo aplicadas a um mini-projeto fictício que você mesmo inventa.',
+      dica:'Não precisa "rodar" nada — o objetivo é praticar a sequência de decisões e o que você registraria em cada etapa.',
+      conceito:'O ciclo completo mostra que treinar um modelo é a menor parte do trabalho: a maior parte é explorar, formular e testar hipóteses, e registrar por que cada decisão foi tomada — exatamente o que o relatório de cada desafio real vai pedir.',
+      avaliar:'se as 9 etapas aparecem na ordem certa e cada uma tem uma ação concreta, não genérica.'
+    })}
+  `,
+
+  10:(id)=>`
+    <p>O diário registra o raciocínio da equipe. Use o formulário completo em <a href="#/diario">Diário de experimentos</a> a qualquer momento durante seus estudos.</p>
+    <div class="markers">
+      <div class="marker saber"><span class="mk-label">Saber</span><ul>
+        <li>Cada entrada deve trazer números, não só impressões: "F1 = 0.81, não 'foi bom'".</li>
+      </ul></div>
+      <div class="marker apoio"><span class="mk-label">Apoio</span><ul>
+        <li>Rubrica de autoavaliação: clareza, coerência, evidência, autoria.</li>
+      </ul></div>
+    </div>
+    <a class="btn" href="#/diario">Abrir o diário de experimentos →</a>
+    ${loopCard({
+      modId:id, key:'registro',
+      pergunta:'Reescreva esta frase genérica como um registro sustentado por evidência: "Escolhemos esse modelo porque funcionou melhor."',
+      dica:'Adicione: quais alternativas foram testadas, qual número comparou cada uma, e se o resultado se manteve estável ao mudar algo pequeno na configuração.',
+      conceito:'Um registro sustentado cita números lado a lado ("F1 = 0.88 contra 0.81 e 0.79") e mostra que o resultado não foi um acaso isolado ("a diferença se manteve ao mudar a fatia de validação de 25% para 30%").',
+      avaliar:'se sua reescrita tem números comparáveis e menciona um teste de estabilidade.'
+    })}
+  `,
+
+  11:(id)=>`
+    <p>Cenários fictícios com várias configurações e resultados — decida o que investigar e reconheça quando falta evidência.</p>
+    <div class="card">
+      <h3>Cenário A (fictício)</h3>
+      <table class="metrics" style="width:100%;">
+        <tr><th>config.</th><th>F1-macro (val)</th><th>F1-macro (treino)</th></tr>
+        <tr><td>X</td><td>0.74</td><td>0.76</td></tr>
+        <tr><td>Y</td><td>0.81</td><td>0.97</td></tr>
+        <tr><td>Z</td><td>0.79</td><td>0.80</td></tr>
+      </table>
+      <label>Qual configuração você investigaria primeiro, e por quê?</label>
+      <textarea id="scenA-text" placeholder="Escreva seu raciocínio..."></textarea>
+      <label>Classifique sua resposta</label>
+      <select id="scenA-tag">
+        <option>Resposta factual sobre um conceito</option>
+        <option>Hipótese minha, ainda não testada</option>
+        <option>Decisão baseada em evidência</option>
+        <option>Informação que ainda precisa ser testada</option>
+      </select>
+      <div class="row-btns"><button type="button" class="btn btn-save-scen">Registrar</button></div>
+      <div class="savednote" id="scenA-note">Registrado no diário.</div>
+    </div>
+    ${loopCard({
+      modId:id, key:'decisao',
+      pergunta:'No cenário acima, o que falta saber antes de decidir com segurança entre Y e Z?',
+      dica:'Compare a distância entre F1 de treino e de validação em cada configuração.',
+      conceito:'A configuração Y tem uma diferença grande entre treino (0.97) e validação (0.81) — sinal de possível sobreajuste, mesmo tendo o maior F1 de validação. Z é mais estável. Decidir exigiria também testar a estabilidade com outra semente antes de escolher.',
+      avaliar:'se você notou o sinal de sobreajuste em Y antes de recomendar Y só pelo número mais alto.'
+    })}
+  `,
+
+  12:(id)=>{
+    return `
+    <p>Antes de considerar a preparação concluída, confira os itens abaixo. Não há punição por deixar algo sem marcar — é um mapa do que revisar.</p>
+    <ul class="checklist">
+      ${CHECKLIST_ITEMS.map((it,i)=>`
+        <li>
+          <input type="checkbox" data-idx="${i}" ${state.checklist[i]?'checked':''}>
+          <span class="txt">${it.t}</span>
+          <a class="rev" href="#/modulo/${it.mod}">Rever módulo ${it.mod}</a>
+        </li>`).join('')}
+    </ul>
+    <div class="callout ok" style="margin-top:18px;">
+      Concluir este checklist não substitui o edital oficial. Antes dos desafios reais, revise regras, prazos e formatos de arquivo nos canais oficiais da OIAA.
+    </div>
+    ${mascotTip('Conferiram tudo? Então é só praticar mais um pouco e partir para os cadernos reais. Boa sorte pra equipe!')}
+    `;
+  },
+};
+
+/* ============================ DIÁRIO ============================ */
+function renderDiario(app){
+  app.innerHTML = `
+  <div class="pagehead">
+    <div class="eyebrow">FERRAMENTA</div>
+    <h1>Diário de experimentos</h1>
+    <p class="desc">Registre cada teste com números e decisões — este é o material que sustenta o relatório de cada desafio real.</p>
+  </div>
+  <div class="card">
+    <form id="diario-form">
+      <label>Hipótese</label><textarea name="hipotese" required></textarea>
+      <label>Dados usados (sempre fictícios/sintéticos aqui)</label><textarea name="dados"></textarea>
+      <label>Alteração feita (o que mudou em relação ao teste anterior)</label><textarea name="alteracao"></textarea>
+      <label>O que permaneceu constante</label><textarea name="constante"></textarea>
+      <label>Métrica de validação (ex.: F1-macro = 0.81)</label><input type="text" name="metrica">
+      <label>Métrica de apoio</label><input type="text" name="apoio">
+      <label>Leitura da matriz de confusão</label><textarea name="matriz"></textarea>
+      <label>Interpretação</label><textarea name="interpretacao"></textarea>
+      <label>Limitações</label><textarea name="limitacoes"></textarea>
+      <label>Decisão</label><textarea name="decisao"></textarea>
+      <label>Próximo passo</label><textarea name="proximo"></textarea>
+      <div class="row-btns"><button class="btn" type="submit">Salvar no diário</button></div>
+    </form>
+  </div>
+  <div class="row-btns" style="margin:18px 0;">
+    <button class="btn secondary" id="diario-download">⬇ Baixar diário (.txt)</button>
+  </div>
+  <div id="diario-list"></div>
+  `;
+  document.getElementById('diario-form').addEventListener('submit', e=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const entry = {};
+    for(const [k,v] of fd.entries()) entry[k]=v;
+    entry.data = new Date().toLocaleDateString('pt-BR');
+    state.diario.push(entry);
+    saveState();
+    e.target.reset();
+    renderDiarioList();
+  });
+  document.getElementById('diario-download').addEventListener('click', ()=>{
+    const text = state.diario.map((d,i)=>`--- Registro ${i+1} (${d.data||''}) ---\n`+
+      Object.entries(d).filter(([k])=>k!=='data').map(([k,v])=>`${k}: ${v}`).join('\n')+'\n').join('\n');
+    const blob = new Blob([text||'Diário vazio.'], {type:'text/plain;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'diario-experimentos-oiaa.txt';
+    a.click();
+  });
+  renderDiarioList();
+}
+function renderDiarioList(){
+  const box = document.getElementById('diario-list');
+  if(!box) return;
+  if(state.diario.length===0){ box.innerHTML = '<p class="small">Nenhum registro ainda.</p>'; return; }
+  box.innerHTML = state.diario.slice().reverse().map(d=>`
+    <div class="diario-entry">
+      <b>${d.origem || 'Diário manual'}</b> — ${d.data||''}<br>
+      ${d.hipotese?('<em>'+d.hipotese+'</em><br>'):''}
+      ${d.decisao||''}
+    </div>`).join('');
+}
+
+/* ============================ PÁGINAS ESTÁTICAS ============================ */
+function viewLimites(){
+  return `
+  <div class="pagehead">
+    <div class="eyebrow">TRANSPARÊNCIA</div>
+    <h1>Limites do curso</h1>
+  </div>
+  <div class="card">
+    <h3>O que este curso faz</h3>
+    <p>Ensina conceitos de classificação, dá prática com dados sintéticos e ajuda você a organizar o raciocínio (hipótese, teste, registro) antes de abrir os cadernos reais da Fase 1.</p>
+    <h3>O que este curso nunca faz</h3>
+    <ul>
+      <li>Não resolve a Operação Farol, a Missão Recomeço ou a Voz do Cliente.</li>
+      <li>Não usa dados oficiais da competição, nem gera previsões para eles.</li>
+      <li>Não produz arquivos de submissão nem notebooks prontos.</li>
+      <li>Não acessa a plataforma da OIAA nem pede login, token ou credencial.</li>
+      <li>Não indica "o melhor modelo" ou "os melhores hiperparâmetros" para os desafios reais.</li>
+    </ul>
+    <h3>Armazenamento</h3>
+    <p>Todo o seu progresso fica salvo apenas no navegador (localStorage), neste dispositivo. Não há conta, servidor ou envio de dados a terceiros.</p>
+  </div>
+  `;
+}
+function viewIA(){
+  return `
+  <div class="pagehead">
+    <div class="eyebrow">TRANSPARÊNCIA</div>
+    <h1>Como usar IA generativa de forma responsável</h1>
+  </div>
+  <div class="card">
+    <h3>Pode</h3>
+    <ul>
+      <li>Usar IA para tirar dúvidas de conceito ou sugerir caminhos — registrando no relatório e verificando cada sugestão.</li>
+      <li>Adaptar, testar e decidir por conta própria a partir do que foi sugerido.</li>
+    </ul>
+    <h3>Não pode</h3>
+    <ul>
+      <li>Copiar integralmente uma solução gerada por IA sem adaptação nem compreensão demonstrada.</li>
+      <li>Compartilhar soluções, códigos ou estratégias com outras equipes.</li>
+    </ul>
+    <div class="callout danger">Conforme o edital da OIAA, prestar informações falsas, usar soluções de terceiros sem autoria ou interferir na integridade dos sistemas são hipóteses de desclassificação. Consulte sempre o edital oficial.</div>
+  </div>
+  `;
+}
+</script>
+</body>
+</html>
